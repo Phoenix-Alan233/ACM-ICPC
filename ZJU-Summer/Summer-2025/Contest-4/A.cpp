@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    puts(R"(b:a
+c:a
+0a:1
+1a:2
+2a:3
+3a:4
+4a:5
+5a:6
+6a:7
+7a:8
+8a:9
+9a:a0
+a:1)");
+    return 0;
+}
