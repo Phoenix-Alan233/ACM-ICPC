@@ -1,11 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+namespace IO {
+    const int SIZE = 1 << 20;
+    char ibuf[SIZE]; int iS, iT;
+    char obuf[SIZE]; int oT;
+    inline char gc() {
+        if (iS == iT) iS = 0, iT = fread(ibuf, 1, SIZE, stdin);
+        return iS == iT ? EOF : ibuf[iS++];
+    }
+    inline void pc(char c) {
+        obuf[oT++] = c;
+        if (oT == SIZE) fwrite(obuf, 1, SIZE, stdout), oT = 0;
+    }
+    inline long long read() {
+        long long x = 0, f = 0;
+        char c = gc();
+        while (!isdigit(c)) f |= c == '-', c = gc();
+        while (isdigit(c)) x = 10 * x + c - '0', c = gc();
+        return f ? -x : x;
+    }
+    inline void print(int64_t x) {
+        static char buf[64];
+        int len = 0;
+        if (x < 0) pc('-'), x = -x;
+        do { buf[++len] = x % 10 + '0', x /= 10; } while (x);
+        while (len) pc(buf[len--]);
+    }
+    inline void print(int64_t x, char ch) {
+        print(x), pc(ch);
+    }
+    struct Flusher {
+        ~Flusher() {
+            if (oT) fwrite(obuf, 1, oT, stdout);
+        }
+    } flusher;
+}
+
 void sc() {
-    long long n, k;
-    scanf("%lld%lld", &n, &k);
+    long long n = IO::read(), k = IO::read();
     if (k == 1) {
-        puts("0");
+        IO::print(0, '\n');
         return;
     }
     vector<long long> powers;
@@ -33,7 +68,7 @@ void sc() {
         }
     }
 
-    printf("%lld\n", ans);
+    IO::print(ans, '\n');
 }
 
 int main() {

@@ -1,6 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+namespace IO {
+    const int SIZE = 1 << 20;
+    char ibuf[SIZE]; int iS, iT;
+    char obuf[SIZE]; int oT;
+    inline char gc() {
+        if (iS == iT) iS = 0, iT = fread(ibuf, 1, SIZE, stdin);
+        return iS == iT ? EOF : ibuf[iS++];
+    }
+    inline void pc(char c) {
+        obuf[oT++] = c;
+        if (oT == SIZE) fwrite(obuf, 1, SIZE, stdout), oT = 0;
+    }
+    inline int read() {
+        int x = 0, f = 0;
+        char c = gc();
+        while (!isdigit(c)) f |= c == '-', c = gc();
+        while (isdigit(c)) x = 10 * x + c - '0', c = gc();
+        return f ? -x : x;
+    }
+    inline void print(int64_t x) {
+        static char buf[64];
+        int len = 0;
+        if (x < 0) pc('-'), x = -x;
+        do { buf[++len] = x % 10 + '0', x /= 10; } while (x);
+        while (len) pc(buf[len--]);
+    }
+    inline void print(int64_t x, char ch) {
+        print(x), pc(ch);
+    }
+    struct Flusher {
+        ~Flusher() {
+            if (oT) fwrite(obuf, 1, oT, stdout);
+        }
+    } flusher;
+}
+
 #define ll long long
 
 const int N = 1000005;
@@ -37,15 +73,14 @@ struct Fenwick {
 } tr0;
 
 int main() {
-    scanf("%d%d", &M, &E);
-    scanf("%d%d", &C, &L);
+    M = IO::read(), E = IO::read(), C = IO::read(), L = IO::read();
 
     for (int i = 1; i <= M; i++) {
-        scanf("%d", &m[i]);
+        m[i] = IO::read();
         assert(m[i] >= m[i - 1]);
     }
     for (int i = 1; i <= E; i++) {
-        scanf("%d", &e[i]);
+        e[i] = IO::read();
         assert(e[i] >= e[i - 1]);
     }
 
